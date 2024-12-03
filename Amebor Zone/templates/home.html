@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock title %}
+
+{% block content %}
+  <br />
+  <div class="jumbotron">
+    <h1 class="display-4">Amebor Zone</h1>
+    <p class="lead">Your Number One Indigenous News & Gist Community.</p>
+    <p class="lead">
+      <a class="btn btn-primary btn-lg" href="{% url 'article_list' %}" role="button">
+        Check All Amebor
+      </a>
+    </p>
+  </div>
+{% endblock content %}
