@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %}Home{% endblock title %}
 
 {% block content %}
 <style>
 .home-section {
   padding: 2rem 0;
-  background: #f8f9fa;
+  background: transparent;
 }
 
 .content-card {
@@ -98,6 +99,50 @@
   color: white;
   text-decoration: none;
 }
+
+/* Video Section Styles */
+.video-section {
+  padding: 2rem 0;
+  background: transparent;
+}
+
+.video-container {
+  position: relative;
+  width: 70%;
+  height: 550px;
+  margin: 0 auto;
+  border-radius: 20px;
+  padding: 0;
+  overflow: hidden;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.6);
+}
+
+.video-wrapper {
+  position: relative;
+  /* padding-bottom: 56.25%; 16:9 Aspect Ratio */
+  height: 800px;
+  overflow: hidden;
+}
+
+.video-wrapper video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.video-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, rgba(106, 17, 203, 0.05), rgba(37, 117, 252, 0.05));
+  pointer-events: none;
+}
 </style>
 
 <section class="home-section">
@@ -128,6 +173,20 @@
         <a class="cta-button" href="{% url 'article_list' %}#article" role="button">
           Check All Amebor
         </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="video-section">
+  <div class="container">
+    <div class="video-container">
+      <div class="video-wrapper">
+        <video autoplay muted loop playsinline>
+          <source src="{% static 'videos/in.mp4' %}" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <div class="video-overlay"></div>
       </div>
     </div>
   </div>
