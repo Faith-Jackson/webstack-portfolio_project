@@ -1,32 +1,298 @@
 {% extends 'base.html' %}
 {% block title %}Articles{% endblock title %}
+
+<style>
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.articles-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.article-card {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    margin-bottom: 3rem;
+    overflow: hidden;
+    animation: fadeInUp 0.6s ease-out forwards;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.article-card:nth-child(1) { animation-delay: 0.1s; }
+.article-card:nth-child(2) { animation-delay: 0.2s; }
+.article-card:nth-child(3) { animation-delay: 0.3s; }
+
+.article-card:hover {
+    animation: pulse 1s ease-in-out infinite;
+}
+
+.article-header {
+    background: linear-gradient(-45deg, #6a11cb, #2575fc, #2575fc, #6a11cb);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    color: white;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.article-header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+    animation: rotate 20s linear infinite;
+}
+
+.article-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    position: relative;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+.article-meta {
+    font-size: 0.95rem;
+    opacity: 0.9;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.article-meta i {
+    font-size: 1.1rem;
+}
+
+.article-body {
+    padding: 2rem;
+    line-height: 1.8;
+    color: #444;
+    font-size: 1.1rem;
+}
+
+.article-actions {
+    padding: 0 2rem 1.5rem;
+    display: flex;
+    gap: 1rem;
+}
+
+.action-btn {
+    padding: 0.5rem 1.5rem;
+    border-radius: 50px;
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.edit-btn {
+    background: linear-gradient(45deg, #6a11cb, #2575fc);
+}
+
+.delete-btn {
+    background: linear-gradient(45deg, #cb1111, #fc2525);
+}
+
+.action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    color: white;
+    text-decoration: none;
+}
+
+.comments-section {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 0 0 20px 20px;
+}
+
+.comments-header {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: #2575fc;
+}
+
+.comment {
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    animation: slideIn 0.3s ease-out forwards;
+    transition: transform 0.3s ease;
+}
+
+.comment:hover {
+    transform: translateX(5px);
+}
+
+.comment-author {
+    color: #6a11cb;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.comment-author i {
+    font-size: 1.2rem;
+}
+
+.comment-form {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 2px solid rgba(106, 17, 203, 0.1);
+}
+
+.comment-input {
+    width: 100%;
+    padding: 1.2rem;
+    border: 2px solid rgba(106, 17, 203, 0.1);
+    border-radius: 15px;
+    margin-bottom: 1rem;
+    resize: none;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.comment-input:focus {
+    outline: none;
+    border-color: #2575fc;
+    box-shadow: 0 0 0 4px rgba(37, 117, 252, 0.1);
+}
+
+.comment-submit {
+    background: linear-gradient(45deg, #6a11cb, #2575fc);
+    color: white;
+    border: none;
+    padding: 1rem 2.5rem;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.comment-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(106, 17, 203, 0.3);
+}
+
+.no-comments {
+    text-align: center;
+    padding: 2rem;
+    color: #6c757d;
+    font-style: italic;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+</style>
+
 {% block content %}
-{% for article in object_list %}
-<div class="card">
-    <div class="card-header">
-        <span class="font-weight-bold">{{ article.title }}</span> &middot;
-        <span class="text-muted">by {{ article.author }} | {{ article.date }}</span>
+<div class="articles-container" id="article">
+    {% for article in object_list %}
+    <div class="article-card">
+        <div class="article-header">
+            <div class="article-title">{{ article.title }}</div>
+            <div class="article-meta">
+                <i class="fas fa-user-circle"></i> {{ article.author }}
+                <i class="fas fa-calendar-alt"></i> {{ article.date }}
+            </div>
+        </div>
+        
+        <div class="article-body">
+            <p>{{ article.body }}</p>
+        </div>
+        
+        <div class="article-actions">
+            <a href="{% url 'article_edit' article.pk %}" class="action-btn edit-btn">
+                <i class="fas fa-edit"></i> Edit
+            </a>
+            <a href="{% url 'article_delete' article.pk %}" class="action-btn delete-btn">
+                <i class="fas fa-trash"></i> Delete
+            </a>
+        </div>
+
+        <div class="comments-section">
+            <div class="comments-header">
+                <i class="fas fa-comments"></i> Comments
+            </div>
+            {% for comment in article.comments.all %}
+            <div class="comment">
+                <div class="comment-author">
+                    <i class="fas fa-user"></i>
+                    {{ comment.author }}
+                </div>
+                <p>{{ comment }}</p>
+            </div>
+            {% empty %}
+            <div class="no-comments">
+                <i class="far fa-comment-dots"></i>
+                <p>No comments yet. Be the first to comment!</p>
+            </div>
+            {% endfor %}
+
+            <div class="comment-form">
+                <form method="post" action="">
+                
+                    <textarea class="comment-input" name="comment" rows="3" placeholder="Share your thoughts..."></textarea>
+                    <button type="submit" class="comment-submit">
+                        <i class="fas fa-paper-plane"></i>
+                        Post Comment
+                    </button>
+                </form>
+            </div>
+        </div>
     </div>
-    <div class="card-body">
-        <!-- Changes start here! -->
-        <p>{{ article.body }}</p>
-        <a href="{% url 'article_edit' article.pk %}">Edit</a> |
-        <a href="{% url 'article_delete' article.pk %}">Delete</a>
-    </div>
-    <div class="card-footer">
-        {% for comment in article.comments.all %}
-        <p>
-            <span class="font-weight-bold">
-                {{ comment.author }} &middot;
-            </span>
-            {{ comment }}
-        </p>
-        {% empty %}
-        <p>No comments yet.</p>
-        {% endfor %}
-    </div>
-    <!-- Changes end here! -->
+    {% endfor %}
 </div>
-<br />
-{% endfor %}
 {% endblock content %}

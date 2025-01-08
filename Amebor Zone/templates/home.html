@@ -1,16 +1,135 @@
 {% extends 'base.html' %}
-
 {% block title %}Home{% endblock title %}
 
 {% block content %}
-  <br />
-  <div class="jumbotron">
-    <h1 class="display-4">Amebor Zone</h1>
-    <p class="lead">Your Number One Indigenous News & Gist Community.</p>
-    <p class="lead">
-      <a class="btn btn-primary btn-lg" href="{% url 'article_list' %}" role="button">
-        Check All Amebor
-      </a>
-    </p>
+<style>
+.home-section {
+  padding: 2rem 0;
+  background: #f8f9fa;
+}
+
+.content-card {
+  background: white;
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  position: relative;
+  overflow: hidden;
+}
+
+.content-card::before {
+  content: '';
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  background: linear-gradient(45deg, #6a11cb, #2575fc);
+  border-radius: 50%;
+  top: -100px;
+  right: -100px;
+  opacity: 0.1;
+}
+
+.main-title {
+  font-size: 3rem;
+  font-weight: 800;
+  background: linear-gradient(45deg, #6a11cb, #2575fc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 1rem;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  color: #6c757d;
+  margin-bottom: 2rem;
+  max-width: 600px;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin: 3rem 0;
+}
+
+.feature-item {
+  padding: 1.5rem;
+  background: rgba(106, 17, 203, 0.05);
+  border-radius: 15px;
+  transition: transform 0.3s ease;
+}
+
+.feature-item:hover {
+  transform: translateY(-5px);
+}
+
+.feature-icon {
+  font-size: 2rem;
+  color: #6a11cb;
+  margin-bottom: 1rem;
+}
+
+.feature-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.feature-text {
+  color: #6c757d;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.cta-button {
+  padding: 1rem 2.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  background: linear-gradient(45deg, #6a11cb, #2575fc);
+  border: none;
+  border-radius: 50px;
+  color: white;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cta-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(106, 17, 203, 0.3);
+  color: white;
+  text-decoration: none;
+}
+</style>
+
+<section class="home-section">
+  <div class="container">
+    <div class="content-card">
+      <h1 class="main-title">Amebor Zone</h1>
+      <p class="subtitle">Your Number One Indigenous News & Gist Community.</p>
+      
+      <div class="features-grid">
+        <div class="feature-item">
+          <div class="feature-icon">📰</div>
+          <h3 class="feature-title">Latest News</h3>
+          <p class="feature-text">Stay updated with breaking news and trending stories from your community.</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">💬</div>
+          <h3 class="feature-title">Active Discussions</h3>
+          <p class="feature-text">Join conversations and share your perspectives with fellow community members.</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">🌟</div>
+          <h3 class="feature-title">Premium Content</h3>
+          <p class="feature-text">Access exclusive stories and in-depth analysis from our expert contributors.</p>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <a class="cta-button" href="{% url 'article_list' %}#article" role="button">
+          Check All Amebor
+        </a>
+      </div>
+    </div>
   </div>
+</section>
 {% endblock content %}
