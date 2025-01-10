@@ -2,6 +2,7 @@
 {% block title %}Articles{% endblock title %}
 
 <style>
+/* Your existing CSS animations and styling */
 @keyframes fadeInUp {
     from {
         opacity: 0;
@@ -36,6 +37,7 @@
     100% { background-position: 0% 50%; }
 }
 
+/* Additional CSS for the page */
 .articles-container {
     max-width: 900px;
     margin: 0 auto;
@@ -61,6 +63,7 @@
     animation: pulse 1s ease-in-out infinite;
 }
 
+/* Header styling */
 .article-header {
     background: linear-gradient(-45deg, #6a11cb, #2575fc, #2575fc, #6a11cb);
     background-size: 400% 400%;
@@ -71,17 +74,6 @@
     overflow: hidden;
 }
 
-.article-header::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
-    animation: rotate 20s linear infinite;
-}
-
 .article-title {
     font-size: 1.8rem;
     font-weight: 700;
@@ -90,95 +82,11 @@
     text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
 }
 
-.article-meta {
-    font-size: 0.95rem;
-    opacity: 0.9;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.article-meta i {
-    font-size: 1.1rem;
-}
-
-.article-body {
-    padding: 2rem;
-    line-height: 1.8;
-    color: #444;
-    font-size: 1.1rem;
-}
-
-.article-actions {
-    padding: 0 2rem 1.5rem;
-    display: flex;
-    gap: 1rem;
-}
-
-.action-btn {
-    padding: 0.5rem 1.5rem;
-    border-radius: 50px;
-    color: white;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.edit-btn {
-    background: linear-gradient(45deg, #6a11cb, #2575fc);
-}
-
-.delete-btn {
-    background: linear-gradient(45deg, #cb1111, #fc2525);
-}
-
-.action-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-    color: white;
-    text-decoration: none;
-}
-
+/* Comments section */
 .comments-section {
     background: #f8f9fa;
     padding: 2rem;
     border-radius: 0 0 20px 20px;
-}
-
-.comments-header {
-    font-size: 1.3rem;
-    font-weight: 600;
-    margin-bottom: 1.5rem;
-    color: #2575fc;
-}
-
-.comment {
-    padding: 1.5rem;
-    margin-bottom: 1rem;
-    background: white;
-    border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-    animation: slideIn 0.3s ease-out forwards;
-    transition: transform 0.3s ease;
-}
-
-.comment:hover {
-    transform: translateX(5px);
-}
-
-.comment-author {
-    color: #6a11cb;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 0.5rem;
-}
-
-.comment-author i {
-    font-size: 1.2rem;
 }
 
 .comment-form {
@@ -214,26 +122,11 @@
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
 }
 
 .comment-submit:hover {
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(106, 17, 203, 0.3);
-}
-
-.no-comments {
-    text-align: center;
-    padding: 2rem;
-    color: #6c757d;
-    font-style: italic;
-}
-
-@keyframes rotate {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
 }
 </style>
 
@@ -272,7 +165,7 @@
                     <i class="fas fa-user"></i>
                     {{ comment.author }}
                 </div>
-                <p>{{ comment }}</p>
+                <p>{{ comment.comment }}</p> <!-- Display the actual comment text -->
             </div>
             {% empty %}
             <div class="no-comments">
@@ -283,7 +176,7 @@
             
             <div class="comment-form">
                 <form method="post" action="">
-                
+                    {% csrf_token %}
                     <textarea class="comment-input" name="comment" rows="3" placeholder="Share your thoughts..."></textarea>
                     <button type="submit" class="comment-submit">
                         <i class="fas fa-paper-plane"></i>
